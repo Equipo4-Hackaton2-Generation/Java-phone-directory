@@ -24,7 +24,7 @@ public class AgendaService implements AgendaRepository {
         if (campo == null || campo.trim().isEmpty()) {
             throw new CampoInvalidoException("El campo '" + nombreCampo + "' no puede estar vacío.");
         }
-        if (!campo.trim().matches("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+")) {
+        if (!campo.trim().matches("[a-zA-ZáéíóúÁÉÍÓÚñÑ]+")) {
             throw new CampoInvalidoException("El campo '" + nombreCampo + "' contiene caracteres inválidos. Solo se permiten letras.");
         }
     }
