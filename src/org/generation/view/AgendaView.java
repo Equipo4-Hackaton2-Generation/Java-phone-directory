@@ -179,14 +179,7 @@ public class AgendaView extends JFrame {
                 throw new CampoInvalidoException("Todos los campos son obligatorios.");
             }
 
-            int tel;
-            try {
-                tel = Integer.parseInt(telStr);
-            } catch (NumberFormatException ex) {
-                throw new CampoInvalidoException("El telefono solo acepta digitos numericos.");
-            }
-
-            service.aniadirContacto(new Contacto(nombre, apellido, tel));
+            service.aniadirContacto(new Contacto(nombre, apellido, telStr));
             limpiar(txtNombre, txtApellido, txtTelefono);
             actualizarTabla();
 
@@ -238,14 +231,7 @@ public class AgendaView extends JFrame {
                 throw new CampoInvalidoException("Todos los campos son obligatorios.");
             }
 
-            int tel;
-            try {
-                tel = Integer.parseInt(telStr);
-            } catch (NumberFormatException ex) {
-                throw new CampoInvalidoException("El telefono solo acepta digitos numericos.");
-            }
-
-            service.modificarContacto(nomAct, apAct, nomNew, apNew, tel);
+            service.modificarContacto(nomAct, apAct, nomNew, apNew, telStr);
             limpiar(txtModBuscarNombre, txtModBuscarApellido, txtModNombre, txtModApellido, txtModTelefono);
             actualizarTabla();
 
