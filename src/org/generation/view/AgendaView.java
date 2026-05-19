@@ -271,6 +271,10 @@ public class AgendaView extends JFrame {
 
             if (conf == JOptionPane.YES_OPTION) {
                 service.eliminarContacto(buscado);
+                JOptionPane.showMessageDialog(
+                        this,
+                        "Contacto eliminado correctamente."
+                );
                 limpiar(txtElimNombre, txtElimApellido);
                 actualizarTabla();
             }
