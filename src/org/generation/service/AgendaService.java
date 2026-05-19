@@ -33,13 +33,16 @@ public class AgendaService implements AgendaRepository {
      * Valida que el teléfono sea un número entero de exactamente 10 dígitos.
      * Como int en Java puede tener hasta 10 dígitos, validamos con String.valueOf.
      */
-    public static void validarTelefono(int telefono) {
-        String tel = String.valueOf(telefono);
-        if (tel.length() != 10) {
-            throw new CampoInvalidoException("El teléfono debe tener exactamente 10 dígitos. Se ingresaron: " + tel.length());
+
+    public static void validarTelefono(String telefono) {
+        if (telefono == null || telefono.trim().isEmpty()) {
+            throw new CampoInvalidoException("El campo teléfono no puede estar vacío.");
         }
-        if (!tel.matches("\\d{10}")) {
-            throw new CampoInvalidoException("El teléfono debe contener únicamente dígitos numéricos.");
+        if (telefono.length() != 10) {
+            throw new CampoInvalidoException("El teléfono debe tener exactamente 10 dígitos. Se ingresaron: " + telefono.length());
+        }
+        if (!telefono.trim().matches("[0-9]+")) {
+            throw new CampoInvalidoException("El teléfono contiene caracteres inválidos. Solo se permiten números.");
         }
     }
 
@@ -141,13 +144,13 @@ public class AgendaService implements AgendaRepository {
      * Modifica nombre, apellido o teléfono de un contacto existente.
      */
     @Override
-    public void modificarContacto(String nombreBuscado, String apellidoBuscado, String nuevoNombre, String nuevoApellido, int nuevoTelefono) {
+    public void modificarContacto(String nombreBuscado, String apellidoBuscado, String nuevoNombre, String nuevoApellido, String nuevoTelefono) {
         validarTexto(nuevoNombre, "Nuevo Nombre");
         validarTexto(nuevoApellido, "Nuevo Apellido");
         validarTelefono(nuevoTelefono);
 
         // Verificar que la combinación nueva nombre+apellido no exista ya (excepto el propio contacto)
-        Contacto posibleDuplicado = new Contacto(nuevoNombre.trim(), nuevoApellido.trim(), 1000000000);
+        Contacto posibleDuplicado = new Contacto(nuevoNombre.trim(), nuevoApellido.trim(), nuevoTelefono.trim());
         // Buscar si ya existe ESA combinación y NO es el mismo contacto que estamos modificando
         for (Contacto c : contactos) {
             if (c.equals(posibleDuplicado) && !c.getNombre().equalsIgnoreCase(nombreBuscado)) {
@@ -163,7 +166,7 @@ public class AgendaService implements AgendaRepository {
                 it.remove();
                 c.setNombre(nuevoNombre.trim());
                 c.setApellido(nuevoApellido.trim());
-                c.setTelefono(nuevoTelefono);
+                c.setTelefono(nuevoTelefono.trim());
                 contactos.add(c);
                 System.out.println("Contacto modificado correctamente.");
                 return;

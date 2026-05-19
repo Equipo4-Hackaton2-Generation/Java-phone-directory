@@ -12,5 +12,5 @@ public interface AgendaRepository {
     void eliminarContacto(Contacto c);
     boolean agendaLlena();
     int espaciosLibres();
-    void modificarContacto(String nombreBuscado, String apellidoBuscado, String nuevoNombre, String nuevoApellido, int nuevoTelefono);
+    void modificarContacto(String nombreBuscado, String apellidoBuscado, String nuevoNombre, String nuevoApellido, String nuevoTelefono);
 }
